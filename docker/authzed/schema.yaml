@@ -1,0 +1,32 @@
+schema: >-
+  definition user {}
+
+  definition battle {
+    relation participants: user
+  }
+
+  definition battle/role {
+    relation assigned_roles: user
+
+    permission is_red = assigned_roles
+    permission is_blue = assigned_roles
+  }
+
+  definition battle/team {
+    relation members: user
+
+    permission can_create = members
+    permission can_view = members
+    permission can_edit = members
+  }
+
+  definition battle/user {
+    relation participants: user
+
+    permission can_create = participants
+    permission can_join = participants
+    permission can_start = participants
+    permission can_assign_role = participants
+    permission can_view = participants
+    permission can_leave = participants
+  }

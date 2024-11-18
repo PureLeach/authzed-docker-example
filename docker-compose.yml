@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+    db:
+        image: postgres:16.3-alpine
+        restart: always
+        volumes:
+            - pgdata_authzed_debug6:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_DB=${POSTGRES_DB_NAME}
+        command:
+            - -p ${POSTGRES_PORT:-5432}
+        ports:
+            - ${POSTGRES_PORT:-5432}:${POSTGRES_PORT:-5432}
+        healthcheck:
+            test: pg_isready -U ${POSTGRES_USER} -p ${POSTGRES_PORT:-5432} -d ${POSTGRES_DB_NAME}
+            interval: 1s
+            timeout: 3s
+            retries: 5
+
+
+    authzed_spicedb:
+        build:
+            context: ./docker/authzed/
+        restart: unless-stopped
+        depends_on:
+            - db
+        env_file:
+            - .env
+        ports:
+            - "50051:50051"
+            - "8085:8085"
+            - "8086:8086"
+        command: >
+            serve --dashboard-addr :8086 --metrics-enabled=false --telemetry-endpoint= --skip-release-check=true
+            --http-enabled --http-addr :${AUTHZED_HTTP_PORT} --grpc-addr :50051 --datastore-engine postgres --datastore-conn-max-open 500
+
+        # command: >
+        #     serve --dashboard-addr :8086 --metrics-enabled=false --telemetry-endpoint= --skip-release-check=true
+        #     --http-enabled --http-addr :${AUTHZED_HTTP_PORT} --datastore-engine postgres --datastore-conn-max-open 500
+
+volumes:
+  pgdata_authzed_debug6:
