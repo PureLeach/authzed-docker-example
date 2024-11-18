@@ -2,7 +2,7 @@
 
 #### Overview
 
-This repository provides a simple example of how to deploy the **Authzed** service using Docker. It also includes sample Python scripts to demonstrate interactions with the service.
+This repository provides a simple example of how to deploy the **[Authzed](https://authzed.com/)** service using Docker. It also includes sample Python scripts to demonstrate interactions with the service.
 
 ---
 
@@ -38,16 +38,22 @@ If you need to modify the schema:
 
 #### 3. Test Interaction with Authzed
 
-Run one of the provided Python scripts to test the service:
+1. Create a new virtual environment and install dependencies:
+   ```bash
+   pipenv shell
+   pipenv install
+   ```
 
-- For asynchronous interaction:
-  ```bash
-  python authzed_async_sample.py
-  ```
-- For synchronous interaction:
-  ```bash
-  python authzed_sync_sample.py
-  ```
+2. Run one of the provided Python scripts to test the service:
+
+   - For asynchronous interaction:
+     ```bash
+     python authzed_async_sample.py
+     ```
+   - For synchronous interaction:
+     ```bash
+     python authzed_sync_sample.py
+     ```
 
 ---
 
