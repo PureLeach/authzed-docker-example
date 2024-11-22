@@ -1,15 +1,16 @@
 version: "3.8"
 
 services:
-    db:
+    postgres:
         image: postgres:16.3-alpine
         restart: always
         volumes:
-            - pgdata_authzed:/var/lib/postgresql/data
+            - pgdata:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=${POSTGRES_USER}
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
             - POSTGRES_DB=${POSTGRES_DB_NAME}
+            - PGPORT=${POSTGRES_PORT}
         ports:
             - ${POSTGRES_PORT}:${POSTGRES_PORT}
         healthcheck:
@@ -23,7 +24,7 @@ services:
             context: ./docker/authzed/
         restart: unless-stopped
         depends_on:
-            db:
+            postgres:
                 condition: service_healthy
         env_file:
             - .env
@@ -38,4 +39,4 @@ services:
 
 
 volumes:
-    pgdata_authzed:
+    pgdata:

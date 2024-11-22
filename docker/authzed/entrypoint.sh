@@ -8,7 +8,7 @@ echo "Running migrations..."
 spicedb datastore migrate head \
     --skip-release-check=true \
     --datastore-engine postgres \
-    --datastore-conn-uri "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${SPICEDB_POSTGRES_DB}"
+    --datastore-conn-uri "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${SPICEDB_POSTGRES_DB}"
 
 
 echo "Validating schema..."
