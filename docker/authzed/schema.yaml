@@ -1,23 +1,12 @@
 schema: >-
   definition user {}
 
-  definition document {
-    relation viewer: user
-    relation editor: user
+
+  definition game_portal/battle {
+
+    relation solo_attacker: user
+    relation solo_defender: user
+
   }
 
-  definition document/role {
-    relation assigned_roles: user
 
-    permission is_viewer = assigned_roles
-    permission is_editor = assigned_roles
-  }
-
-  definition document/user {
-    relation participants: user
-
-    permission can_create = participants
-    permission can_view = participants
-    permission can_edit = participants
-    permission can_delete = participants
-  }
